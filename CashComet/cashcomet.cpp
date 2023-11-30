@@ -33,73 +33,73 @@ void init(void) {
 	glutCreateWindow("CashComet!");
 	glClearColor(1.0, 1.0, 1.0, 0.0); // Set display-window color to white
 	glMatrixMode(GL_PROJECTION);
-	gluOrtho2D(0.0, winWidth, winHeight, 0.0); // set top left as origin
+//	gluOrtho2D(0.0, winWidth, winHeight, 0.0); // set top left as origin
 
-	pix[0].readBMPFile("Background.bmp"); // doesn't work, but program still runs
-	pix[0].setTexture(0);
+//	pix[0].readBMPFile("Background.bmp"); // doesn't work, but program still runs
+//	pix[0].setTexture(0);
 }
 
-void orthogonalStart()
-{
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    gluOrtho2D(-w1/2, w1/2, -h1/2, h1/2);
-    glMatrixMode(GL_MODELVIEW);
-}
-
-void orthogonalEnd()
-{
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
-}
-
-GLuint LoadTexture()
-{
-    unsigned char data[] = { 255,0,0, 0,255,0, 0,0,255, 255,255,255 };
-
-    glGenTextures( 1, &texture);
-    glBindTexture( GL_TEXTURE_2D, texture );
-    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-
-    //even better quality, but this will do for now.
-    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-
-    //to the edge of our shape.
-    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-
-    //Generate the texture
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0,GL_RGB, GL_UNSIGNED_BYTE, data);
-    return texture; //return whether it was successful
-}
-
-
-void background()
-{
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    orthogonalStart();
-
-    // texture width/height
-    const int iw = 500;
-    const int ih = 500;
-
-    glPushMatrix();
-    glTranslatef( -iw/2, -ih/2, 0 );
-    glBegin(GL_QUADS);
-        glTexCoord2i(0,0); glVertex2i(0, 0);
-        glTexCoord2i(1,0); glVertex2i(iw, 0);
-        glTexCoord2i(1,1); glVertex2i(iw, ih);
-        glTexCoord2i(0,1); glVertex2i(0, ih);
-    glEnd();
-    glPopMatrix();
-
-    orthogonalEnd();
-}
+//void orthogonalStart()
+//{
+//    glMatrixMode(GL_PROJECTION);
+//    glPushMatrix();
+//    glLoadIdentity();
+//    gluOrtho2D(-w1/2, w1/2, -h1/2, h1/2);
+//    glMatrixMode(GL_MODELVIEW);
+//}
+//
+//void orthogonalEnd()
+//{
+//    glMatrixMode(GL_PROJECTION);
+//    glPopMatrix();
+//    glMatrixMode(GL_MODELVIEW);
+//}
+//
+//GLuint LoadTexture()
+//{
+//    unsigned char data[] = { 255,0,0, 0,255,0, 0,0,255, 255,255,255 };
+//
+//    glGenTextures( 1, &texture);
+//    glBindTexture( GL_TEXTURE_2D, texture );
+//    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+//    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+//
+//    //even better quality, but this will do for now.
+//    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+//    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+//
+//    //to the edge of our shape.
+//    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+//    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+//
+//    //Generate the texture
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0,GL_RGB, GL_UNSIGNED_BYTE, data);
+//    return texture; //return whether it was successful
+//}
+//
+//
+//void background()
+//{
+//    glBindTexture(GL_TEXTURE_2D, texture);
+//
+//    orthogonalStart();
+//
+//    // texture width/height
+//    const int iw = 500;
+//    const int ih = 500;
+//
+//    glPushMatrix();
+//    glTranslatef( -iw/2, -ih/2, 0 );
+//    glBegin(GL_QUADS);
+//	glTexCoord2i(0,0); glVertex2i(0, 0);
+//	glTexCoord2i(1,0); glVertex2i(iw, 0);
+//	glTexCoord2i(1,1); glVertex2i(iw, ih);
+//	glTexCoord2i(0,1); glVertex2i(0, ih);
+//    glEnd();
+//    glPopMatrix();
+//
+//    orthogonalEnd();
+//}
 
 
 
@@ -111,10 +111,9 @@ void display(void) {
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
 
-    background();
-    gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+//    background();
+    //gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-    glutSwapBuffers();
 
 	glFlush();
 	glutSwapBuffers();

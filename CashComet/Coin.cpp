@@ -9,7 +9,7 @@
 
 Coin::Coin() {
 	radius = 1.0;
-	r=1;
+	r=2;
 	g=1;
 	b=0;
 	segments = 100;
@@ -21,6 +21,7 @@ Coin::~Coin() { };
 void Coin::draw() {
     glPushMatrix();
     ctmMultiply();
+    glColor3f(r,g,b);  // Yellow color for coin
 
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(0, 0);  // Center of the disk
