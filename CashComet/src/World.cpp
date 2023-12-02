@@ -1,11 +1,30 @@
 #include "World.hpp"
+#include "Sphere.hpp"
+#include "Coin.hpp"
+#include "Cube.hpp"
 
 using namespace std;
 
 World::World() {
-	Shape *obj = NULL;
+	//Shape *obj = NULL;
 
     /* add Coins to the object list here */
+
+//	Shape *obj = new Cube(); // test only
+//	obj->setId(1);
+//	objlist.push_back(obj);
+
+	Shape *obj = new Coin();
+	obj->setId(1);
+	objlist.push_back(obj);
+	obj->translate(0,0,0);
+
+	Shape *obj2 = new Sphere(1.0);
+	obj2->setId(2);
+	objlist.push_back(obj2);
+	obj2->translate(0,3,0);
+
+//	glutWireTorus(0.2,0.8,16,16);
 
 }
 
@@ -40,7 +59,7 @@ void World::draw() {
 }
 
 void World::reset(){
-	Shape *obj = NULL;
+	//Shape *obj = NULL;
 
 
 }
