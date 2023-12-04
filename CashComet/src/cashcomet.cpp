@@ -24,6 +24,11 @@ Camera myCamera;
 GLuint texture;
 RGBpixmap pix[1]; /* pixmaps for textures */
 
+// Concatenate the parent directory and the each audio file name
+std::string bgMusicPath;
+std::string coinAudioPath;
+std::string bombAudioPath;
+
 int w1 = 0; // coordinates for displaying background
 int h1 = 0;
 
@@ -64,11 +69,14 @@ void init(void) {
     // Get the parent directory of the executable path
     std::string parentDirectory = getDirectory(executablePath);
 
-    // Concatenate the parent directory and the file name
-    std::string filePath = parentDirectory + "\\LL - Puzzle.wav";
+    // Concatenate the parent directory and the each audio file name
+    bgMusicPath = parentDirectory + "\\LL - Puzzle.wav";
+    coinAudioPath = parentDirectory + "\\Coin.wav";
+    bombAudioPath = parentDirectory + "\\Bomb.wav";
 
     // Play the sound using the absolute path
-    PlaySound(filePath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music
+
+//    PlaySound(bgMusicPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
 
 
 	//PlaySound(TEXT("D:\\Temporary school data\\CP411\\cp411_software\\cp411_software\\cp411\\workspace\\CashComet\\LL - Puzzle.wav"), NULL, SND_FILENAME | SND_ASYNC);
@@ -143,6 +151,34 @@ void init(void) {
 //}
 
 
+void mouseActionFcn(int button, int state, int xMouse, int yMouse) {
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+		printf("Test\n");
+
+	}
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+		//isInMove = 0;
+		//printf("Test 2.\n");
+		printf("Obtained coin!.\n");
+		PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+		//PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
+
+	}
+
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+		printf("Test\n");
+
+	}
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP) {
+		//isInMove = 0;
+		//printf("Test 2.\n");
+		printf("Boom!\n");
+		PlaySound(bombAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
+
+	}
+
+}
+
 
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -176,6 +212,7 @@ int main(int argc, char** argv) {
 	init();
 	glutDisplayFunc(display);
 //	glutReshapeFunc(winReshapeFcn);
+	glutMouseFunc(mouseActionFcn); // For detecting mouse clicks
 	glutMainLoop();
 	return 0;
 }
