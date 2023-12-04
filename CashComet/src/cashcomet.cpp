@@ -7,7 +7,8 @@
 
 #include <stdio.h>
 #include <gl/glut.h>
-
+#include <windows.h> // for playing sound
+#include <mmsystem.h>
 
 #include "pixmap/RGBpixmap.h"
 
@@ -26,6 +27,27 @@ RGBpixmap pix[1]; /* pixmaps for textures */
 int w1 = 0; // coordinates for displaying background
 int h1 = 0;
 
+
+// Function to get the absolute path of the executable
+std::string getExecutablePath() {
+    char buffer[MAX_PATH];
+    GetModuleFileNameA(NULL, buffer, MAX_PATH);
+    return std::string(buffer);
+}
+
+
+// Function to get the directory part of a path
+std::string getDirectory(const std::string& path) {
+    size_t found = path.find_last_of("/\\");
+    if (found != std::string::npos) {
+        size_t secondLastFound = path.find_last_of("/\\", found - 1);
+        if (secondLastFound != std::string::npos) {
+            return path.substr(0, secondLastFound);
+        }
+    }
+    return "";
+}
+
 void init(void) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);  // GLUT_DOUBLE for double frame buffer
 	glutInitWindowPosition(100, 100);
@@ -33,6 +55,25 @@ void init(void) {
 	glutCreateWindow("CashComet!");
 	glClearColor(1.0, 1.0, 1.0, 0.0); // Set display-window color to white
 	glMatrixMode(GL_PROJECTION);
+
+	// The following code is used to get the absolute path of the project folder and concatenate it with the audio file
+    char buffer[MAX_PATH];
+    GetModuleFileNameA(NULL, buffer, MAX_PATH);
+    std::string executablePath(buffer);
+
+    // Get the parent directory of the executable path
+    std::string parentDirectory = getDirectory(executablePath);
+
+    // Concatenate the parent directory and the file name
+    std::string filePath = parentDirectory + "\\LL - Puzzle.wav";
+
+    // Play the sound using the absolute path
+    PlaySound(filePath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music
+
+
+	//PlaySound(TEXT("D:\\Temporary school data\\CP411\\cp411_software\\cp411_software\\cp411\\workspace\\CashComet\\LL - Puzzle.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	//PlaySound(TEXT("Puzzle.wav"), NULL, SND_FILENAME | SND_ASYNC);
+
 //	gluOrtho2D(0.0, winWidth, winHeight, 0.0); // set top left as origin
 
 //	pix[0].readBMPFile("Background.bmp"); // doesn't work, but program still runs
