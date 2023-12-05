@@ -1,7 +1,7 @@
 
 #include "Shape.hpp"
 #include <stdio.h>
-
+#include <math.h>
 using namespace std;
 
 Shape::Shape() {
@@ -96,4 +96,21 @@ void Shape::ctmMultiply() {
 	M[14] = mc.mat[2][3];
 	M[15] = 1;
 	glMultMatrixf(M);
+}
+
+bool Shape::isInside(int xMouse, int yMouse){
+	int xW,yW,radius;
+	if (CoinOrBomb == 1){
+		radius = 15;
+	}else{
+		radius = 50;
+	}
+
+	yW = 400 + mc.mat[0][3]*(-72);
+	xW = 400 + mc.mat[1][3]*(-72);
+
+	if ( abs(xW-xMouse) <= radius && abs(yW-yMouse) <=radius ){
+		return true;
+	}
+	return false;
 }

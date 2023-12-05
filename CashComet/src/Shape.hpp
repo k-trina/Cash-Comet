@@ -62,6 +62,9 @@ public:
 	void rotateOrigin(GLfloat x0, GLfloat  y0, GLfloat  z0, GLfloat  rx, GLfloat  ry, GLfloat rz, GLfloat  angle); /* rotate MCS origion w.r.t. axis (x0,y0,z0)+u(rx,ry,yz) in WCS */
 	void reset();             /* a function that resets the shape transformation matrix */
 	virtual void draw() = 0;  /* draw function must be overwritten */
+	bool isInside(int xMouse, int yMouse);
+	GLint CoinOrBomb; // 1 for coin 2 for bomb
+
 };
 
 #endif

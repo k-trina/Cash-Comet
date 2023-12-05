@@ -22,7 +22,7 @@ public:
 	GLdouble radius; // radius
 	int segments; // number of triangular pieces pieced together to create disk-shaped object to form coin. 100 by default
 	//GLuint textureID;
-
+	bool isInside(int xMouse, int yMouse);
 	// Methods
 	Coin(); // constructor of coin object
     virtual ~Coin();  // destructor

@@ -6,14 +6,14 @@
  */
 
 # include "Coin.hpp"
-
+#include <stdio.h>
 Coin::Coin() {
 	radius = 0.25;
 	r=2;
 	g=1;
 	b=0;
 	segments = 100;
-
+	CoinOrBomb =0;
 }
 
 Coin::~Coin() { };
@@ -41,6 +41,9 @@ void Coin::draw() {
 
     glEnd();
     glPopMatrix();
+}
+
+
 
     // The below code generates a star shape. It was unintentionally created when experimenting.
 //        glPushMatrix();
@@ -65,7 +68,7 @@ void Coin::draw() {
 //
 //        glEnd();
 //        glPopMatrix();
-}
+
 
 //void display() {
 //    glClear(GL_COLOR_BUFFER_BIT);

@@ -10,7 +10,7 @@
 #include <windows.h> // for playing sound
 #include <mmsystem.h>
 
-#include "pixmap/RGBpixmap.h"
+//#include "pixmap/RGBpixmap.h"
 
 #include "Menu.hpp"
 #include "World.hpp"
@@ -22,7 +22,7 @@ GLint winWidth = 800, winHeight = 800;
 World myWorld;
 Camera myCamera;
 GLuint texture;
-RGBpixmap pix[1]; /* pixmaps for textures */
+//RGBpixmap pix[1]; /* pixmaps for textures */
 
 // Concatenate the parent directory and the each audio file name
 std::string bgMusicPath;
@@ -31,6 +31,11 @@ std::string bombAudioPath;
 
 int w1 = 0; // coordinates for displaying background
 int h1 = 0;
+
+// MAY DELETE
+//GLdouble modelview[16],projection[16];
+//GLint viewport[4];
+//GLdouble mouseX,mouseY,mouseZ;
 
 
 // Function to get the absolute path of the executable
@@ -61,6 +66,8 @@ void init(void) {
 	glClearColor(1.0, 1.0, 1.0, 0.0); // Set display-window color to white
 	glMatrixMode(GL_PROJECTION);
 
+//	myCamera.set()
+
 	// The following code is used to get the absolute path of the project folder and concatenate it with the audio file
     char buffer[MAX_PATH];
     GetModuleFileNameA(NULL, buffer, MAX_PATH);
@@ -82,7 +89,7 @@ void init(void) {
 	//PlaySound(TEXT("D:\\Temporary school data\\CP411\\cp411_software\\cp411_software\\cp411\\workspace\\CashComet\\LL - Puzzle.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	//PlaySound(TEXT("Puzzle.wav"), NULL, SND_FILENAME | SND_ASYNC);
 
-//	gluOrtho2D(0.0, winWidth, winHeight, 0.0); // set top left as origin
+	gluOrtho2D(0.0, winWidth, winHeight, 0.0); // set top left as origin
 
 //	pix[0].readBMPFile("Background.bmp"); // doesn't work, but program still runs
 //	pix[0].setTexture(0);
@@ -103,52 +110,52 @@ void init(void) {
 //    glPopMatrix();
 //    glMatrixMode(GL_MODELVIEW);
 //}
-//
-//GLuint LoadTexture()
-//{
-//    unsigned char data[] = { 255,0,0, 0,255,0, 0,0,255, 255,255,255 };
-//
-//    glGenTextures( 1, &texture);
-//    glBindTexture( GL_TEXTURE_2D, texture );
-//    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
-//    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-//
-//    //even better quality, but this will do for now.
-//    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-//    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-//
-//    //to the edge of our shape.
-//    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-//    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-//
-//    //Generate the texture
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0,GL_RGB, GL_UNSIGNED_BYTE, data);
-//    return texture; //return whether it was successful
-//}
-//
-//
-//void background()
-//{
-//    glBindTexture(GL_TEXTURE_2D, texture);
-//
+
+GLuint LoadTexture()
+{
+    unsigned char data[] = { 255,0,0, 0,255,0, 0,0,255, 255,255,255 };
+
+    glGenTextures( 1, &texture);
+    glBindTexture( GL_TEXTURE_2D, texture );
+    glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+
+    //even better quality, but this will do for now.
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+
+    //to the edge of our shape.
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+
+    //Generate the texture
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0,GL_RGB, GL_UNSIGNED_BYTE, data);
+    return texture; //return whether it was successful
+}
+
+
+void background()
+{
+    glBindTexture(GL_TEXTURE_2D, texture);
+
 //    orthogonalStart();
-//
-//    // texture width/height
-//    const int iw = 500;
-//    const int ih = 500;
-//
-//    glPushMatrix();
-//    glTranslatef( -iw/2, -ih/2, 0 );
-//    glBegin(GL_QUADS);
-//	glTexCoord2i(0,0); glVertex2i(0, 0);
-//	glTexCoord2i(1,0); glVertex2i(iw, 0);
-//	glTexCoord2i(1,1); glVertex2i(iw, ih);
-//	glTexCoord2i(0,1); glVertex2i(0, ih);
-//    glEnd();
-//    glPopMatrix();
-//
+
+    // texture width/height
+    const int iw = 500;
+    const int ih = 500;
+
+    glPushMatrix();
+    glTranslatef( -iw/2, -ih/2, 0 );
+    glBegin(GL_QUADS);
+	glTexCoord2i(0,0); glVertex2i(0, 0);
+	glTexCoord2i(1,0); glVertex2i(iw, 0);
+	glTexCoord2i(1,1); glVertex2i(iw, ih);
+	glTexCoord2i(0,1); glVertex2i(0, ih);
+    glEnd();
+    glPopMatrix();
+
 //    orthogonalEnd();
-//}
+}
 
 
 void mouseActionFcn(int button, int state, int xMouse, int yMouse) {
@@ -156,19 +163,15 @@ void mouseActionFcn(int button, int state, int xMouse, int yMouse) {
 		printf("Test\n");
 
 	}
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
-		//isInMove = 0;
-		//printf("Test 2.\n");
-		printf("Obtained coin!.\n");
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+		int coinOrBomb;
+		printf("X: %d Y: %d\n",xMouse,yMouse);
+		coinOrBomb = myWorld.findMatch(xMouse,yMouse);
 		PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
-		//PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
+//		PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
 
 	}
 
-	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-		printf("Test\n");
-
-	}
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP) {
 		//isInMove = 0;
 		//printf("Test 2.\n");
@@ -179,6 +182,14 @@ void mouseActionFcn(int button, int state, int xMouse, int yMouse) {
 
 }
 
+void movement(){
+	myWorld.falling();
+}
+
+void startGame(){
+	glutIdleFunc(movement);
+
+}
 
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -188,8 +199,8 @@ void display(void) {
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
 
-//    background();
-    //gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    background();
+//    gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
 
 	glFlush();
@@ -213,6 +224,7 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(display);
 //	glutReshapeFunc(winReshapeFcn);
 	glutMouseFunc(mouseActionFcn); // For detecting mouse clicks
+	startGame();
 	glutMainLoop();
 	return 0;
 }

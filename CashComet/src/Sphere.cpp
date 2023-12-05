@@ -103,9 +103,9 @@ void Sphere::draw() { // this function simulates shading through gradient comput
 
     glEnd();
 
-	Shape *spark = new Star();
-	spark->translate(2, 0, 4.05); // positions the spark atop the fuse
-	spark->draw();
+//	Shape *spark = new Star();
+//	spark->translate(2, 0, 4.05); // positions the spark atop the fuse
+//	spark->draw();
 
     glPopMatrix();
 }
