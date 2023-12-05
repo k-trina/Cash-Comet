@@ -13,14 +13,15 @@ World::World() {
     /* add Coins to the object list here */
 	numOfCoins=10;
 	srand(time(NULL));
-	float random_float;
+	float random_float,random_float1;
 	Shape *obj;
 	for(int i=0;i<numOfCoins;i++){
 		random_float  = ((float)rand() / RAND_MAX) * 10 - 5;
+		random_float1  = ((float)rand() / RAND_MAX) * 10 - 5;
 		obj = new Coin();
 		obj->CoinOrBomb =1;
 		objlist.push_back(obj);
-		obj->translate(5,random_float,0);
+		obj->translate(5 +random_float1,random_float,0);
 
 	}
 
@@ -29,10 +30,11 @@ World::World() {
 	numOfBombs = 3;
 	for(int i=0;i<numOfBombs;i++){
 		random_float  = ((float)rand() / RAND_MAX) * 10 - 5;
+		random_float1  = ((float)rand() / RAND_MAX) * 10 - 5;
 		obj = new Sphere(0.5);
 		obj->CoinOrBomb =2;
 		objlist.push_back(obj);
-		obj->translate(5,random_float,0);
+		obj->translate(5+random_float1,random_float,0);
 	}
 
 
