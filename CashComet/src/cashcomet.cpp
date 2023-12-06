@@ -16,12 +16,14 @@
 #include "World.hpp"
 #include "Camera.hpp"
 #include "Light.hpp"
+#include "UserInterface.hpp"
 
 // Global variables
 GLint winWidth = 800, winHeight = 800;
 World myWorld;
 Camera myCamera;
 GLuint texture;
+bool intro = true;
 //RGBpixmap pix[1]; /* pixmaps for textures */
 
 // Concatenate the parent directory and the each audio file name
@@ -212,20 +214,57 @@ void startGame(){
 
 }
 
-void display(void) {
+void displayIntro(void) {
+//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//	myCamera.setProjectionMatrix();
+//	myWorld.draw();
+//
+//    glLoadIdentity();
+//    glEnable(GL_TEXTURE_2D);
+//
+//    background();
+////    gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+//
+//
+//	glFlush();
+//	glutSwapBuffers();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	myCamera.setProjectionMatrix();
-	myWorld.draw();
-
-    glLoadIdentity();
-    glEnable(GL_TEXTURE_2D);
-
-    background();
-//    gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+//	message("Click Anywhere To Start!",300,winHeight/2);
+	gameCountDown();
 
 
 	glFlush();
+	glutPostRedisplay();
 	glutSwapBuffers();
+}
+
+void display(void) {
+	if (intro == true) {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//	message("Click Anywhere To Start!",300,winHeight/2);
+		gameCountDown();
+
+
+		glFlush();
+		glutPostRedisplay();
+		glutSwapBuffers();
+		intro = false;
+	} else {
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		myCamera.setProjectionMatrix();
+		myWorld.draw();
+
+	    glLoadIdentity();
+	    glEnable(GL_TEXTURE_2D);
+
+	    background();
+	//    gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
+
+		glFlush();
+		glutSwapBuffers();
+	}
+
 }
 
 void winReshapeFcn(GLint newWidth, GLint newHeight) {
@@ -236,13 +275,22 @@ void winReshapeFcn(GLint newWidth, GLint newHeight) {
 	winHeight = newHeight;
 }
 
+void timerCallback(int value) {
+    glutDisplayFunc(display);  // Set the display function after the timer expires
+    glutPostRedisplay();       // Trigger a redisplay
+}
+
 int main(int argc, char** argv) {
 	setvbuf(stdout, NULL, _IONBF, 0); // For Eclipse stdout debugging
 	setvbuf(stderr, NULL, _IONBF, 0);
 	glutInit(&argc, argv);
 
 	init();
-	glutDisplayFunc(display);
+	glutDisplayFunc(displayIntro);
+	// pause for 3 seconds before game starts
+
+	glutTimerFunc(3000,timerCallback, 0);
+
 //	glutReshapeFunc(winReshapeFcn);
 	glutMouseFunc(mouseActionFcn); // For detecting mouse clicks
 	startGame();
