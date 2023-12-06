@@ -24,6 +24,7 @@ World myWorld;
 Camera myCamera;
 GLuint texture;
 bool intro = true;
+int userScore = 0;
 //RGBpixmap pix[1]; /* pixmaps for textures */
 
 // Concatenate the parent directory and the each audio file name
@@ -186,10 +187,17 @@ void mouseActionFcn(int button, int state, int xMouse, int yMouse) {
 		printf("X: %d Y: %d\n",xMouse,yMouse);
 		coinOrBomb = myWorld.findMatch(xMouse,yMouse);
 		//PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
-		if (coinOrBomb == 1)
+		if (coinOrBomb == 1){
 			PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
-		else if (coinOrBomb == 2)
+			userScore += 300;
+			printf("Coin clicked! User score: %d\n",userScore);
+		} else if (coinOrBomb == 2){
 			PlaySound(bombAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+			userScore -= 600;
+			if (userScore < 0) // clicking on bombs does not allow user score to go below 0
+				userScore = 0;
+			printf("BOOM! Clicked a bomb. User score: %d\n",userScore);
+		}
 //		PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
 
 	}
