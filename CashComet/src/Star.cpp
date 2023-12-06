@@ -8,7 +8,7 @@
 # include "Star.hpp"
 
 Star::Star() {
-	radius = 0.1;
+	radius = 0.07;
 	r=2;
 	g=1;
 	b=0;
@@ -21,6 +21,9 @@ void Star::draw() {
 	// The below code generates a star shape. It was unintentionally created when experimenting.
 	glPushMatrix();
 	ctmMultiply();
+
+	glTranslatef(0.3, 0.65, 0.0);
+
 	glColor3f(r, g, b);  // Yellow color for coin
 
 	glBegin(GL_TRIANGLE_FAN);
@@ -38,6 +41,7 @@ void Star::draw() {
 
 		glVertex2f(modifiedRadius * cos(angle), modifiedRadius * sin(angle));
 	}
+
 
 	glEnd();
 	glPopMatrix();

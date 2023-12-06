@@ -58,6 +58,16 @@ std::string getDirectory(const std::string& path) {
     return "";
 }
 
+
+void* playBGAudio(std::string filePath) { // unused at the moment due to lack of incompatibility with simultaneous audios
+    PlaySound(filePath.c_str(), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    return NULL;
+}
+
+void playSEAudio(const char* filePath) {
+    PlaySound(filePath, NULL, SND_FILENAME | SND_ASYNC);
+}
+
 void init(void) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);  // GLUT_DOUBLE for double frame buffer
 	glutInitWindowPosition(100, 100);
@@ -83,7 +93,8 @@ void init(void) {
 
     // Play the sound using the absolute path
 
-   PlaySound(bgMusicPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
+   //PlaySound(bgMusicPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
+
 
 
 	//PlaySound(TEXT("D:\\Temporary school data\\CP411\\cp411_software\\cp411_software\\cp411\\workspace\\CashComet\\LL - Puzzle.wav"), NULL, SND_FILENAME | SND_ASYNC);
@@ -93,7 +104,12 @@ void init(void) {
 
 //	pix[0].readBMPFile("Background.bmp"); // doesn't work, but program still runs
 //	pix[0].setTexture(0);
+
+    //std::string bgMusicPath = "path_to_your_audio_file.wav";  // Replace with your audio file path
+
 }
+
+
 
 //void orthogonalStart()
 //{
@@ -167,18 +183,23 @@ void mouseActionFcn(int button, int state, int xMouse, int yMouse) {
 		int coinOrBomb;
 		printf("X: %d Y: %d\n",xMouse,yMouse);
 		coinOrBomb = myWorld.findMatch(xMouse,yMouse);
-		PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+		//PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+		if (coinOrBomb == 1)
+			PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+		else if (coinOrBomb == 2)
+			PlaySound(bombAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
 //		PlaySound(coinAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
 
 	}
 
-	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP) {
-		//isInMove = 0;
-		//printf("Test 2.\n");
-		printf("Boom!\n");
-		PlaySound(bombAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
-
-	}
+//	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP) { // TESTING SOUND EFFECTS ONLY
+//		//isInMove = 0;
+//		//printf("Test 2.\n");
+//		printf("Boom!\n");
+//		//PlaySound(bombAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC); // Plays the background music. UNCOMMENT TO HEAR MUSIC
+//		PlaySound(bombAudioPath.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+//
+//	}
 
 }
 

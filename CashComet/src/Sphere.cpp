@@ -13,6 +13,8 @@ Sphere::Sphere(GLdouble size) {
     b = 0.4;
     //fuseHeight = 0.2;  // Height of the fuse cylinder
     quad = gluNewQuadric();
+
+
 }
 
 
@@ -22,7 +24,6 @@ void Sphere::setTextureID(GLuint id) {
 }
 
 void Sphere::draw() { // this function simulates shading through gradient computation, but doesn't use openGL lighting
-	GLdouble fuseHeight = 0.25;
     glPushMatrix();
     ctmMultiply();
 
@@ -75,40 +76,72 @@ void Sphere::draw() { // this function simulates shading through gradient comput
     }
 
     // Draw the fuse (cylinder) on top of the sphere
-    for (int i = 0; i < splices; ++i) {
-        float theta = (float)stacks / stacks * M_PI;
-        float phi1 = (float)i / splices * 2.0 * M_PI;
-        float phi2 = (float)(i + 1) / splices * 2.0 * M_PI;
+    glColor3f(0.6, 0.3, 0.1);  // Brown color
 
-        // Compute vertex positions for the fuse
-        float x1 = 0.0;
-        float y1 = radius * cos(theta);
-        float z1 = radius * sin(theta);
+    // Draw a rectangle
+    glBegin(GL_QUADS);
+    glVertex3f(0.15, 0.3, 0.1);
+    glVertex3f(0.3, 0.3, 0.1);
+    glVertex3f(0.3, 0.6, 0.1);
+    glVertex3f(0.2, 0.6, 0.1);
 
-        float x2 = fuseHeight * sin(phi1);
-        float y2 = y1 + fuseHeight * cos(phi1);
-        float z2 = fuseHeight * sin(phi1);
 
-        float x3 = fuseHeight * sin(phi2);
-        float y3 = y1 + fuseHeight * cos(phi2);
-        float z3 = fuseHeight * sin(phi2);
+//	int segments = 100;
+//	for (int i = 0; i <= segments; ++i) {
+//		float angle = i * 2.0 * M_PI / segments;
+//
+//		// Modify the radius to add some convexity
+//		float modifiedRadius = 0.1 + 0.2 * sin(angle * 5.0);
+//
+//		// Use a gradient color to simulate shading
+//		float shade = 0.5 + 0.5 * cos(angle);
+//		glColor3f(2 * shade, 1 * shade, 0 * shade);
+//
+//		glVertex2f(modifiedRadius * cos(angle), modifiedRadius * sin(angle));
+//	}
+
+//    glEnd();
+
+//    for (int i = 0; i < splices; ++i) {
+//        float theta = (float)stacks / stacks * M_PI;
+//        float phi1 = (float)i / splices * 2.0 * M_PI;
+//        float phi2 = (float)(i + 1) / splices * 2.0 * M_PI;
+//
+//        // Compute vertex positions for the fuse rectangle
+//        float x1 = 0.0;
+//        float y1 = radius * cos(theta);
+//        float z1 = radius * sin(theta);
+//
+//        float x2 = fuseHeight * sin(phi1);
+//        float y2 = y1 + fuseHeight * cos(phi1);
+//        float z2 = radius * sin(theta) + fuseHeight * sin(phi1);
+//
+//        float x3 = fuseHeight * sin(phi2);
+//        float y3 = y1 + fuseHeight * cos(phi2);
+//        float z3 = radius * sin(theta) + fuseHeight * sin(phi2);
 
         // Set color for each vertex of the fuse
-        glColor3f(0.4, 0.4, 0.4);  // Light gray for the fuse
-        glVertex3f(x1, y1, z1);
-        glVertex3f(x2, y2, z2);
-        glVertex3f(x3, y3, z3);
-        glVertex3f(0.0, y1 + fuseHeight, 0.0);
-    }
+//        glColor3f(0.4, 0.4, 0.4);  // Light gray for the fuse
+//        glVertex3f(x1, y1, z1);
+//        glVertex3f(x2, y2, z2);
+//        glVertex3f(x3, y3, z3);
+//        glVertex3f(0.0, y1 + fuseHeight, radius * sin(theta));
+
+
+//    }
 
     glEnd();
-
-//	Shape *spark = new Star();
-//	spark->translate(2, 0, 4.05); // positions the spark atop the fuse
-//	spark->draw();
-
+	Shape *spark = new Star();
+	spark->draw();
+//	spark->translate(0.225, 0.6, 0.1);
     glPopMatrix();
+
+
+
 }
+
+//    glPopMatrix();
+//}
 
 //void Sphere::draw() {
 //    glPushMatrix();
